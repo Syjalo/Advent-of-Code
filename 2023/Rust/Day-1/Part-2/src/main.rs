@@ -1,6 +1,6 @@
 use std::fs;
 
-const NUMBER_NAMES: [&str; 9] = [
+const DIGIT_NAMES: [&str; 9] = [
     "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
 ];
 
@@ -23,8 +23,8 @@ fn main() {
 
             let subline = line.get(index..).unwrap();
 
-            for (index, number_name) in NUMBER_NAMES.iter().enumerate() {
-                if subline.starts_with(number_name) {
+            for (index, digit_name) in DIGIT_NAMES.iter().enumerate() {
+                if subline.starts_with(digit_name) {
                     numbers.push(index as i32 + 1);
                 }
             }
