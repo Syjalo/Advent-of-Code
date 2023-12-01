@@ -9,17 +9,17 @@ fn main() {
     let mut sum = 0;
 
     for line in lines {
-        let mut numbers: Vec<i32> = Vec::new();
+        let mut digits: Vec<i32> = Vec::new();
 
         for character in line.chars() {
-            if let Some(number) = character.to_digit(10) {
-                numbers.push(number as i32);
+            if let Some(digit) = character.to_digit(10) {
+                digits.push(digit as i32);
             }
         }
 
-        let first_number = numbers.first().unwrap();
-        let last_number = numbers.last().unwrap();
-        sum += first_number * 10 + last_number;
+        let first_digit = digits.first().unwrap();
+        let last_digit = digits.last().unwrap();
+        sum += first_digit * 10 + last_digit;
     }
 
     println!("{sum}");
