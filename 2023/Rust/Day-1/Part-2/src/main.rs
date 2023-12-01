@@ -10,7 +10,7 @@ fn main() {
         .split("\n")
         .map(|line| line.trim())
         .filter(|line| !line.is_empty());
-    let mut sum: i32 = 0;
+    let mut sum = 0;
 
     for line in lines {
         let mut numbers: Vec<i32> = Vec::new();
