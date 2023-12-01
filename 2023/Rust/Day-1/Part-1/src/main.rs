@@ -2,6 +2,11 @@ use std::fs;
 
 fn main() {
     let content = fs::read_to_string("./input.txt").unwrap();
+    let sum = part_1(&content);
+    println!("{sum}");
+}
+
+fn part_1(content: &str) -> i32 {
     let lines = content
         .split("\n")
         .map(|line| line.trim())
@@ -22,5 +27,19 @@ fn main() {
         sum += first_digit * 10 + last_digit;
     }
 
-    println!("{sum}");
+    sum
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_part_1() {
+        let sum = super::part_1(
+            "1abc2
+            pqr3stu8vwx
+            a1b2c3d4e5f
+            treb7uchet",
+        );
+        assert_eq!(sum, 142);
+    }
 }

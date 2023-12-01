@@ -6,6 +6,11 @@ const DIGITS_NAMES: [&str; 9] = [
 
 fn main() {
     let content = fs::read_to_string("./input.txt").unwrap();
+    let sum = part_2(&content);
+    println!("{sum}");
+}
+
+fn part_2(content: &str) -> i32 {
     let lines = content
         .split("\n")
         .map(|line| line.trim())
@@ -35,5 +40,22 @@ fn main() {
         sum += first_digit * 10 + last_digit;
     }
 
-    println!("{sum}");
+    sum
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_part_2() {
+        let sum = super::part_2(
+            "two1nine
+            eightwothree
+            abcone2threexyz
+            xtwone3four
+            4nineeightseven2
+            zoneight234
+            7pqrstsixteen",
+        );
+        assert_eq!(sum, 281);
+    }
 }
