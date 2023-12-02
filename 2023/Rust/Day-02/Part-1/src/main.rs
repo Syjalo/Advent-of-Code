@@ -34,7 +34,8 @@ fn part_1(content: &str) -> i32 {
 
     'lines: for line in lines {
         let (game, input) = line.split_once(": ").unwrap();
-        let game_id: i32 = game.split_once(" ").unwrap().1.parse().unwrap();
+        let (_, game_id) = game.split_once(" ").unwrap();
+        let game_id: i32 = game_id.parse().unwrap();
         let rounds = input.split("; ");
 
         for round in rounds {
