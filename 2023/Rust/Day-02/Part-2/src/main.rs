@@ -1,5 +1,6 @@
-use std::{fs, str::FromStr};
+use std::{collections::BTreeMap, fs, str::FromStr};
 
+#[derive(PartialEq, Eq, PartialOrd, Ord)]
 enum CubeColor {
     Blue,
     Green,
@@ -21,21 +22,21 @@ impl FromStr for CubeColor {
 
 fn main() {
     let content = fs::read_to_string("input.txt").unwrap();
-    let sum = part_1(&content);
+    let sum = part_2(&content);
     println!("{sum}");
 }
 
-fn part_1(content: &str) -> i32 {
+fn part_2(content: &str) -> i32 {
     let lines = content
         .lines()
         .map(|line| line.trim())
         .filter(|line| !line.is_empty());
     let mut sum = 0;
 
-    'lines: for line in lines {
-        let (game, input) = line.split_once(": ").unwrap();
-        let game_id: i32 = game.split_once(" ").unwrap().1.parse().unwrap();
+    for line in lines {
+        let (_, input) = line.split_once(": ").unwrap();
         let rounds = input.split("; ");
+        let mut maxs: BTreeMap<CubeColor, i32> = BTreeMap::new();
 
         for round in rounds {
             let cubes = round.split(", ");
@@ -44,19 +45,15 @@ fn part_1(content: &str) -> i32 {
                 let (count, color) = cube.split_once(" ").unwrap();
                 let count: i32 = count.parse().unwrap();
                 let color: CubeColor = color.parse().unwrap();
-                let is_possible = match color {
-                    CubeColor::Blue => count <= 14,
-                    CubeColor::Green => count <= 13,
-                    CubeColor::Red => count <= 12,
-                };
 
-                if !is_possible {
-                    continue 'lines;
+                if maxs.get(&color).unwrap_or(&i32::MIN) < &count {
+                    maxs.insert(color, count);
                 }
             }
         }
 
-        sum += game_id;
+        let product: i32 = maxs.values().product();
+        sum += product;
     }
 
     sum
@@ -64,14 +61,14 @@ fn part_1(content: &str) -> i32 {
 #[cfg(test)]
 mod tests {
     #[test]
-    fn test_part_1() {
-        let sum = super::part_1(
+    fn test_part_2() {
+        let sum = super::part_2(
             "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
             Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
             Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
             Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
             Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green",
         );
-        assert_eq!(sum, 8);
+        assert_eq!(sum, 2286);
     }
 }
