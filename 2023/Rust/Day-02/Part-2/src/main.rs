@@ -58,6 +58,7 @@ fn part_2(content: &str) -> i32 {
 
     sum
 }
+
 #[cfg(test)]
 mod tests {
     #[test]
