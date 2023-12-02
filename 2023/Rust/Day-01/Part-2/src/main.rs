@@ -5,14 +5,14 @@ const DIGITS_NAMES: [&str; 9] = [
 ];
 
 fn main() {
-    let content = fs::read_to_string("./input.txt").unwrap();
+    let content = fs::read_to_string("input.txt").unwrap();
     let sum = part_2(&content);
     println!("{sum}");
 }
 
 fn part_2(content: &str) -> i32 {
     let lines = content
-        .split("\n")
+        .lines()
         .map(|line| line.trim())
         .filter(|line| !line.is_empty());
     let mut sum = 0;
